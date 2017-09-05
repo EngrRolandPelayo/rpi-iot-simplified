@@ -2,6 +2,46 @@ _pin = None
 _opin = None
 _servopin = None
 _p = None
+_trig = None
+_echo = None
+
+class USONIC:
+ 
+ import RPi.GPIO as GPIO
+ import time
+
+ def __init__(self,trig,echo):
+  global _trig
+  global _echo
+  _trig = trig
+  _echo = echo
+  self.GPIO.setup(_trig, GPIO.OUT)
+  self.GPIO.setup(_echo, GPIO.IN)
+  
+ def GETDISTANCE(self):
+  global _trig
+  global _echo
+
+  self.time.sleep(0.5)
+  self.GPIO.output(_trig, 0)
+  self.time.sleep(0.5)
+
+  self.GPIO.output(_trig,1)
+  self.time.sleep(0.00001)
+  self.GPIO.output(_trig,0)
+
+  while self.GPIO.input(_echo) == 0:
+   pulse_start = self.time.time()
+
+  while self.GPIO.input(_echo) == 1:
+   pulse_end = self.time.time()
+
+  pulse_duration = pulse_end - pulse_start
+  distance = pulse_duration * 17150
+  distance = round(distance, 2)
+  print distance
+  return distance
+
 
 class SERVO:
  
