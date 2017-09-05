@@ -1,5 +1,47 @@
 _pin = None
 _opin = None
+_servopin = None
+_p = None
+
+class SERVO:
+ 
+ import RPi.GPIO as GPIO
+ import time
+
+ def __init__(self,pin):
+  global _servopin
+  global _p
+  _servopin = pin
+  self.GPIO.setmode(self.GPIO.BOARD)
+  self.GPIO.setwarnings(False)
+  self.GPIO.setup(_servopin, self.GPIO.OUT)
+  _p = self.GPIO.PWM(_servopin, 50)
+  _p.start(0)
+ 
+ def CCW(self):
+  global _p
+  global _servopin
+  print "Turning servo at " + str(_servopin) + " counter clockwise"
+  for dc in range(10,0,-1):
+   _p.ChangeDutyCycle(dc)
+   self.time.sleep(0.1)
+ 
+ def CW(self):
+  global _p
+  global _servopin
+  print "Turning servo at " + str(_servopin) + " clockwise"
+  for dc in range(0,10,1):
+   _p.ChangeDutyCycle(dc)
+   self.time.sleep(0.1)
+  
+ def SETANGLE(self, angle):
+  global _p
+  global _servopin
+  print "Turning servo at " + str(_servopin) + " an angle of " + str(angle)
+  dc = (angle+2)/18
+  _p.ChangeDutyCycle(dc)
+  self.time.sleep(0.1) 
+
 
 class LED:
 
@@ -18,7 +60,7 @@ class LED:
   self.GPIO.setmode(self.GPIO.BOARD)
   self.GPIO.setup(_pin, self.GPIO.OUT)
   self.GPIO.output(_pin, 1)
-  self.GPIO.cleanup()
+  #self.GPIO.cleanup()
 
  def OFF(self):
   global _pin
@@ -26,7 +68,7 @@ class LED:
   self.GPIO.setmode(self.GPIO.BOARD)
   self.GPIO.setup(_pin, self.GPIO.OUT)
   self.GPIO.output(_pin, 0)
-  self.GPIO.cleanup()
+  #self.GPIO.cleanup()
 
 class BUTTON:
  
