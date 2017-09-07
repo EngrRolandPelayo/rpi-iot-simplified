@@ -1,0 +1,47 @@
+from flask import Flask
+from flask import request
+GPIO.setwarnings(False)
+from flask import render_template
+#import IO
+import RPi.GPIO as GPIO
+import time
+
+app = Flask(__name__)
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(12,GPIO.OUT)
+GPIO.setwarnings(False)
+p = GPIO.PWM(12,50)
+p.start(0)
+
+@app.route('/')
+def index():
+    return render_template("web-servo.html")
+
+@app.route('/', methods=['POST'])
+def index_post():
+
+    if "CW" in request.form:
+     CW()
+    elif "CCW" in request.form:
+     CCW()
+    return render_template("web-servo.html")
+
+def CW():
+  for angle in range(0, 180, 5):
+   dc = (angle+2)/18
+   print dc
+   p.ChangeDutyCycle(dc)
+   time.sleep(0.01)
+
+def CCW():
+  for angle in range(180, 0, -5):
+   dc = (angle+2)/18
+   print dc
+   p.ChangeDutyCycle(dc)
+   time.sleep(0.01)
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0')
+

@@ -15,8 +15,10 @@ class USONIC:
   global _echo
   _trig = trig
   _echo = echo
-  self.GPIO.setup(_trig, GPIO.OUT)
-  self.GPIO.setup(_echo, GPIO.IN)
+  self.GPIO.setwarnings(False)
+  self.GPIO.setmode(self.GPIO.BOARD)
+  self.GPIO.setup(_trig, self.GPIO.OUT)
+  self.GPIO.setup(_echo, self.GPIO.IN)
   
  def GETDISTANCE(self):
   global _trig
