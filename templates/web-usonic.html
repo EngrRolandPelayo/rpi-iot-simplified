@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type = "text/css" href="{{ url_for('static', filename='stylesheets/main.css')}}" />
+<!-- <meta http-equiv="refresh" content="1"/> -->
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script>
+function request(){
+ $.get($SCRIPT_ROOT + '/get-distance',function(data){
+  console.log(data{{distance}});
+  $("#res").text(data{{distance}});
+  setInterval(request(),1000);
+ });
+}
+
+</script>
+<script>
+ window.onload = setInterval(request(),1000);
+</script>
+<head>
+<body>
+    <center><h1>Determine Distance</h1></center>
+    <center><div id="main">
+    <div id="distance">Distance: <div id="res"></div></div>
+     <div id="usonic">
+      <img src = "{{ url_for('static', filename='images/usonic.gif')}}" />
+     </div>
+    </div>
+   </div>
+    </center>
+</body>
+</html>
+

@@ -69,7 +69,7 @@ h1{
 }
 
 #servo{
- position: absolute;
+ position: relative;
  top: 100px;
  left: -80px;
  width: 199px;
@@ -84,3 +84,21 @@ h1{
  height: 318px;
 }
 
+#distance{
+ position: absolute;
+ font-size: 40px;
+ font-family: Arial;
+ top: 400px;
+}
+
+#usonic{
+ position: absolute;
+ top: 100px;
+}
+
+#res{
+ width: 200px;
+ position: absolute;
+ top: 0px;
+ left: 200px
+}
