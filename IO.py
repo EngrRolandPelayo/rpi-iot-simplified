@@ -4,6 +4,7 @@ _servopin = None
 _p = None
 _trig = None
 _echo = None
+BTDT = None
 
 class USONIC:
  
@@ -49,7 +50,7 @@ class SERVO:
  
  import RPi.GPIO as GPIO
  import time
-
+ 
  def __init__(self,pin):
   global _servopin
   global _p
@@ -63,19 +64,25 @@ class SERVO:
  def CCW(self):
   global _p
   global _servopin
-  print "Turning servo at " + str(_servopin) + " counter clockwise"
-  for dc in range(10,0,-1):
-   _p.ChangeDutyCycle(dc)
-   self.time.sleep(0.1)
+  global BTDT
+  if BTDT != "CCW":
+   print "Turning servo at " + str(_servopin) + " counter clockwise"
+   for dc in range(10,0,-1):
+    _p.ChangeDutyCycle(dc)
+    self.time.sleep(0.1)
+  BTDT = "CCW"
  
  def CW(self):
   global _p
   global _servopin
-  print "Turning servo at " + str(_servopin) + " clockwise"
-  for dc in range(0,10,1):
-   _p.ChangeDutyCycle(dc)
-   self.time.sleep(0.1)
-  
+  global BTDT
+  if BTDT != "CW":
+   print "Turning servo at " + str(_servopin) + " clockwise"
+   for dc in range(0,10,1):
+    _p.ChangeDutyCycle(dc)
+    self.time.sleep(0.1)
+  BTDT = "CW"
+
  def SETANGLE(self, angle):
   global _p
   global _servopin
